@@ -1,0 +1,31 @@
+<div class="flex justify-content-end m-3">
+  <p-button label="Ajouter" icon="pi pi-plus" severity="secondary" (onClick)="displayDialog()"></p-button>
+</div>
+
+<p-table [value]="listPokemons">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Image</th>
+      <th>Numero</th>
+      <th>Nom</th>
+      <th></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-pokemon>
+    <tr>
+      <td><img [src]="'http://localhost:3000/pokemon/image/' + pokemon.numero" ></td>
+      <td>{{pokemon.numero}}</td>
+      <td>{{pokemon.nom}}</td>
+      <td>
+        <div class="flex justify-content-end gap-1">
+          <p-button icon="pi pi-search" size="small" severity="info" ></p-button>
+          <p-button icon="pi pi-trash" size="small" severity="danger" (click)="delete(pokemon)"></p-button>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-dialog [(visible)]="formVisible" [maximizable]="true" [modal]="true" [style]="{'width': '50%'}">
+  <app-pokemon-form (visible)="onVisibilityChange($event)"></app-pokemon-form>
+</p-dialog>

@@ -1,0 +1,31 @@
+<form class="flex flex-column gap-3 my-3" [formGroup]="form" (ngSubmit)="save()">
+  <p-float-label variant="on">
+    <p-input-number formControlName="numero" class="w-full"></p-input-number>
+    <label>Numero</label>
+  </p-float-label>
+  <p-float-label variant="on">
+    <input pInputText formControlName="nom" class="w-full">
+    <label>Nom</label>
+  </p-float-label>
+  <p-float-label variant="on">
+    <p-input-number formControlName="poids" class="w-full"></p-input-number>
+    <label>Poids</label>
+  </p-float-label>
+  <p-float-label variant="on">
+    <p-input-number [maxFractionDigits]="2" formControlName="taille" class="w-full"></p-input-number>
+    <label>Taille</label>
+  </p-float-label>
+  <ng-container formArrayName="types">
+    @for(control of typesForm.controls; track $index) {
+      <p-float-label variant="on">
+        <input pInputText [formControlName]="$index" class="w-full">
+        <label>Type {{ $index + 1 }}</label>
+      </p-float-label>
+    }
+  </ng-container>
+  <input #imageInput hidden type="file" formControlName="image">
+  <p-button severity="info" type="button" label="Charger une image" icon="pi pi-upload" iconPos="right" (click)="imageInput.click()"></p-button>
+  <div class="flex justify-content-end">
+    <p-button type="submit" label="Sauver" icon="pi pi-send" iconPos="right"></p-button>
+  </div>
+</form>
