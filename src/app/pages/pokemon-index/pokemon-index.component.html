@@ -1,8 +1,8 @@
 <div class="flex justify-content-end m-3">
-  <p-button label="Ajouter" icon="pi pi-plus" severity="secondary" (onClick)="displayDialog()"></p-button>
+  <p-button label="Ajouter" icon="pi pi-plus" severity="secondary" (onClick)="showFormDialog()"></p-button>
 </div>
 
-<p-table [value]="listPokemons">
+<p-table [value]="listPokemons() ?? []">
   <ng-template pTemplate="header">
     <tr>
       <th>Image</th>
@@ -19,7 +19,7 @@
       <td>
         <div class="flex justify-content-end gap-1">
           <p-button icon="pi pi-search" size="small" severity="info" ></p-button>
-          <p-button icon="pi pi-trash" size="small" severity="danger" (click)="delete(pokemon)"></p-button>
+          <p-button icon="pi pi-trash" size="small" severity="danger" (click)="showDeleteConfirmation(pokemon)"></p-button>
         </div>
       </td>
     </tr>

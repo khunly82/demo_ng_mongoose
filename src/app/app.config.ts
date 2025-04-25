@@ -7,7 +7,6 @@ import Nora from '@primeng/themes/nora';
 import {provideAnimations} from '@angular/platform-browser/animations';
 import {provideHttpClient} from '@angular/common/http';
 import {ConfirmationService, MessageService} from 'primeng/api';
-import {PokemonService} from './services/pokemon.service';
 import {DialogService} from 'primeng/dynamicdialog';
 
 export const appConfig: ApplicationConfig = {
@@ -26,3 +25,11 @@ export const appConfig: ApplicationConfig = {
     DialogService,
   ]
 };
+
+export const baseDialogConfig = {
+  width: '50vw',
+  closable: true,
+  dismissableMask: true,
+  maximizable: true,
+  modal: true,
+}

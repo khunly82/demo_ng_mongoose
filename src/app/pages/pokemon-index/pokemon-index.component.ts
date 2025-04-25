@@ -6,6 +6,9 @@ import {Button} from 'primeng/button';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {PokemonFormComponent} from '../../components/pokemon-form/pokemon-form.component';
 import {DialogService} from 'primeng/dynamicdialog';
+import {toSignal} from '@angular/core/rxjs-interop';
+import {BehaviorSubject, filter, switchMap} from 'rxjs';
+import {baseDialogConfig} from '../../app.config';
 
 @Component({
   imports: [
@@ -21,55 +24,42 @@ export class PokemonIndexComponent {
   private messageService = inject(MessageService);
   private dialogService = inject(DialogService);
 
-  listPokemons: Pokemon[] = [];
+  private refresh$ = new BehaviorSubject<void>(undefined);
+  listPokemons = toSignal(this.refresh$.pipe(switchMap(() => this.pokemonService.getAll())))
 
-  constructor() {
-    this.loadData();
-  }
-
-  delete(pokemon: any) {
+  showDeleteConfirmation(pokemon: Pokemon) {
     this.confirmationService.confirm({
-      message: 'Voulez-vous vraiment supprimer ce pokemon ?',
+      message: `Voulez-vous vraiment supprimer ce pokemon (${pokemon.nom})?`,
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        this.pokemonService.delete(pokemon.numero)
-          .subscribe({
-            next: () => {
-              this.loadData();
-              this.messageService.add({
-                severity: 'success',
-                summary: 'Pokemon deleted'
-              })
-            }, error: () => {
-              this.messageService.add({
-                severity: 'error',
-                summary: 'Pokemon not deleted'
-              })
-            }
-          })
-      }
+      accept: () => this.acceptDelete(pokemon)
     })
   }
 
-  private loadData() {
-    this.pokemonService.getAll()
-      .subscribe({
-        next:  pokemons => this.listPokemons = pokemons
-      });
-  }
-
-  displayDialog() {
+  showFormDialog() {
     this.dialogService.open(PokemonFormComponent, {
+      ...baseDialogConfig,
       header: 'Add a pokemon',
-      width: '50vw',
-      closable: true,
-      dismissableMask: true,
-      modal: true,
-    }).onClose.subscribe(result => {
-      if(result) {
-        this.loadData();
-      }
-    })
+    }).onClose
+      .pipe(filter(refresh => refresh))
+      .subscribe(() => this.refresh$.next())
+  }
+
+  private acceptDelete(pokemon: Pokemon) {
+    this.pokemonService.delete(pokemon.numero)
+      .subscribe({
+        next: () => {
+          this.refresh$.next();
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Pokemon deleted'
+          })
+        }, error: () => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Pokemon not deleted'
+          })
+        }
+      })
   }
 }
