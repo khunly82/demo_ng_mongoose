@@ -1,5 +1,5 @@
 import {Component, ElementRef, inject, output, ViewChild} from '@angular/core';
-import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {FloatLabel} from 'primeng/floatlabel';
 import {InputNumber} from 'primeng/inputnumber';
 import {InputText} from 'primeng/inputtext';
@@ -28,18 +28,18 @@ export class PokemonFormComponent {
 
   visible = output<boolean>();
 
-  typesForm = this.formBuilder.array([
+  typesForm: FormArray = this.formBuilder.array([
     this.formBuilder.control('', { validators: [Validators.required] }),
     this.formBuilder.control(''),
   ]);
 
-  form = this.formBuilder.group({
+  form: FormGroup = this.formBuilder.group({
     numero: [null, [Validators.required, Validators.min(1)]],
-    nom: ['', [Validators.required]],
+    nom: [null, [Validators.required]],
     types: this.typesForm,
     taille: [null, [Validators.required]],
     poids: [null, [Validators.required]],
-    image: [null, Validators.required]
+    image: [null, Validators.required],
   });
 
   save() {
@@ -54,9 +54,8 @@ export class PokemonFormComponent {
     fd.append('taille', this.form.get('taille')?.value!);
     fd.append('image', this.imageInput.nativeElement.files[0]!);
     fd.append('types',
-      this.form.get('types')?.value.filter(v => !!v).join(',')!
+      this.typesForm.value.filter((v: string|null) => !!v).join(',')!
     );
-
 
     this.pokemonService.add(fd).subscribe({
       next: () => {

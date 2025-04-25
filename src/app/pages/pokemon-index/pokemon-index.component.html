@@ -13,7 +13,7 @@
   </ng-template>
   <ng-template pTemplate="body" let-pokemon>
     <tr>
-      <td><img [src]="'http://localhost:3000/pokemon/image/' + pokemon.numero" ></td>
+      <td><img [alt]="pokemon.nom" [src]="'http://localhost:3000/pokemon/image/' + pokemon.numero" ></td>
       <td>{{pokemon.numero}}</td>
       <td>{{pokemon.nom}}</td>
       <td>

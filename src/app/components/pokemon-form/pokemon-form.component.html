@@ -16,7 +16,7 @@
     <label>Taille</label>
   </p-float-label>
   <ng-container formArrayName="types">
-    @for(control of typesForm.controls; track $index) {
+    @for(_ of typesForm.controls; track $index) {
       <p-float-label variant="on">
         <input pInputText [formControlName]="$index" class="w-full">
         <label>Type {{ $index + 1 }}</label>

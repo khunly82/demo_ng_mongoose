@@ -12,7 +12,7 @@ import {PokemonFormComponent} from '../../components/pokemon-form/pokemon-form.c
     TableModule,
     Button,
     Dialog,
-    PokemonFormComponent
+    PokemonFormComponent,
   ],
   templateUrl: './pokemon-index.component.html',
   styleUrl: './pokemon-index.component.scss'

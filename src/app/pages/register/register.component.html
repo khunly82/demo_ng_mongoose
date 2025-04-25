@@ -1,0 +1,17 @@
+<div class="flex align-items-center justify-content-center">
+  <div class="col-8">
+    <p-card header="Se connecter">
+      <form class="flex flex-column gap-3" (ngSubmit)="register()" [formGroup]="form">
+        <p-float-label variant="on">
+          <input pInputText formControlName="nom" class="w-full">
+          <label>Nom du dresseur</label>
+        </p-float-label>
+        <p-float-label variant="on">
+          <p-input-number formControlName="age" class="w-full"></p-input-number>
+          <label>Age du dresseur</label>
+        </p-float-label>
+        <p-button type="submit" label="S'enregister" severity="contrast"></p-button>
+      </form>
+    </p-card>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+<div class="flex align-items-center justify-content-center">
+  <div class="col-8">
+    <p-card header="Se connecter">
+      <div class="flex flex-column gap-3">
+        <p-float-label variant="on">
+          <input pInputText (keyup.enter)="login()" [(ngModel)]="dresseurId" class="w-full">
+          <label>Id du dresseur</label>
+        </p-float-label>
+        <p-button label="Se Connecter" severity="contrast" (onClick)="login()"></p-button>
+      </div>
+    </p-card>
+    <hr class="my-3">
+    <p-button severity="help" label="S'enregistrer" (onClick)="goToRegistrationPage()" ></p-button>
+  </div>
+</div>
