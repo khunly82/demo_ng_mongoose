@@ -4,15 +4,13 @@ import {Pokemon} from '../../models/pokemon.model';
 import {TableModule} from 'primeng/table';
 import {Button} from 'primeng/button';
 import {ConfirmationService, MessageService} from 'primeng/api';
-import {Dialog} from 'primeng/dialog';
 import {PokemonFormComponent} from '../../components/pokemon-form/pokemon-form.component';
+import {DialogService} from 'primeng/dynamicdialog';
 
 @Component({
   imports: [
     TableModule,
     Button,
-    Dialog,
-    PokemonFormComponent,
   ],
   templateUrl: './pokemon-index.component.html',
   styleUrl: './pokemon-index.component.scss'
@@ -21,9 +19,9 @@ export class PokemonIndexComponent {
   private pokemonService = inject(PokemonService);
   private confirmationService = inject(ConfirmationService);
   private messageService = inject(MessageService);
+  private dialogService = inject(DialogService);
 
   listPokemons: Pokemon[] = [];
-  formVisible = false;
 
   constructor() {
     this.loadData();
@@ -62,13 +60,16 @@ export class PokemonIndexComponent {
   }
 
   displayDialog() {
-    this.formVisible = true;
-  }
-
-  onVisibilityChange(event: boolean) {
-    this.formVisible = event;
-    if(!event) {
-      this.loadData();
-    }
+    this.dialogService.open(PokemonFormComponent, {
+      header: 'Add a pokemon',
+      width: '50vw',
+      closable: true,
+      dismissableMask: true,
+      modal: true,
+    }).onClose.subscribe(result => {
+      if(result) {
+        this.loadData();
+      }
+    })
   }
 }

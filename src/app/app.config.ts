@@ -8,6 +8,7 @@ import {provideAnimations} from '@angular/platform-browser/animations';
 import {provideHttpClient} from '@angular/common/http';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {PokemonService} from './services/pokemon.service';
+import {DialogService} from 'primeng/dynamicdialog';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -22,5 +23,6 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     MessageService,
     ConfirmationService,
+    DialogService,
   ]
 };

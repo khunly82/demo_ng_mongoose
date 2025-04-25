@@ -6,6 +6,7 @@ import {InputText} from 'primeng/inputtext';
 import {Button} from 'primeng/button';
 import {PokemonService} from '../../services/pokemon.service';
 import {MessageService} from 'primeng/api';
+import {DynamicDialogRef} from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-pokemon-form',
@@ -25,8 +26,7 @@ export class PokemonFormComponent {
   private formBuilder = inject(FormBuilder);
   private pokemonService = inject(PokemonService);
   private messageService = inject(MessageService);
-
-  visible = output<boolean>();
+  private dialogRef = inject(DynamicDialogRef);
 
   typesForm: FormArray = this.formBuilder.array([
     this.formBuilder.control('', { validators: [Validators.required] }),
@@ -64,7 +64,7 @@ export class PokemonFormComponent {
           severity: 'success',
           summary: 'Pokemon saved'
         });
-        this.visible.emit(false);
+        this.dialogRef.close(true);
       }, error: () => {
         this.messageService.add({
           severity: 'error',
