@@ -3,29 +3,35 @@
     <p-input-number formControlName="numero" class="w-full"></p-input-number>
     <label>Numero</label>
   </p-float-label>
+  <app-form-error [control]="form.get('numero')!"></app-form-error>
   <p-float-label variant="on">
     <input pInputText formControlName="nom" class="w-full">
     <label>Nom</label>
   </p-float-label>
+  <app-form-error [control]="form.get('nom')!"></app-form-error>
   <p-float-label variant="on">
     <p-input-number formControlName="poids" class="w-full"></p-input-number>
     <label>Poids</label>
   </p-float-label>
+  <app-form-error [control]="form.get('poids')!"></app-form-error>
   <p-float-label variant="on">
     <p-input-number [maxFractionDigits]="2" formControlName="taille" class="w-full"></p-input-number>
     <label>Taille</label>
   </p-float-label>
+  <app-form-error [control]="form.get('taille')!"></app-form-error>
   <ng-container formArrayName="types">
-    @for(_ of typesForm.controls; track $index) {
+    @for(control of typesForm.controls; track $index) {
       <p-float-label variant="on">
         <input pInputText [formControlName]="$index" class="w-full">
         <label>Type {{ $index + 1 }}</label>
       </p-float-label>
+      <app-form-error [control]="control"></app-form-error>
     }
   </ng-container>
   <input #imageInput hidden type="file" formControlName="image">
   <p-button severity="info" type="button" label="Charger une image" icon="pi pi-upload" iconPos="right" (click)="imageInput.click()"></p-button>
+  <app-form-error [control]="form.get('image')!"></app-form-error>
   <div class="flex justify-content-end">
-    <p-button type="submit" label="Sauver" icon="pi pi-send" iconPos="right"></p-button>
+    <p-button [disabled]="form.invalid" type="submit" label="Sauver" icon="pi pi-send" iconPos="right"></p-button>
   </div>
 </form>

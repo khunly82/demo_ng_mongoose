@@ -7,6 +7,7 @@ import {Button} from 'primeng/button';
 import {PokemonService} from '../../services/pokemon.service';
 import {MessageService} from 'primeng/api';
 import {DynamicDialogRef} from 'primeng/dynamicdialog';
+import {FormErrorComponent} from '../form-error/form-error.component';
 
 @Component({
   selector: 'app-pokemon-form',
@@ -15,7 +16,8 @@ import {DynamicDialogRef} from 'primeng/dynamicdialog';
     FloatLabel,
     InputNumber,
     InputText,
-    Button
+    Button,
+    FormErrorComponent
   ],
   templateUrl: './pokemon-form.component.html',
   styleUrl: './pokemon-form.component.scss'
@@ -29,8 +31,8 @@ export class PokemonFormComponent {
   private dialogRef = inject(DynamicDialogRef);
 
   typesForm: FormArray = this.formBuilder.array([
-    this.formBuilder.control('', { validators: [Validators.required] }),
-    this.formBuilder.control(''),
+    this.formBuilder.control(null, { validators: [Validators.required] }),
+    this.formBuilder.control(null),
   ]);
 
   form: FormGroup = this.formBuilder.group({

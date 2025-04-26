@@ -1,0 +1,17 @@
+@if(control() && errors && (control().touched || control().dirty) && control().enabled) {
+  @if(getError('required')) {
+    <small class="text-red-500">Ce champ est requis</small>
+  }
+  @if(getError('minlength')) {
+    <small class="text-red-500">Cette valeur est trop courte ({{getError('minlength').actualLength}}/{{getError('minlength').requiredLength}})</small>
+  }
+  @if(getError('maxlength')) {
+    <small class="text-red-500">Cette valeur est trop longue ({{getError('maxlength').actualLength}}/{{getError('maxlength').requiredLength}})</small>
+  }
+  @if(getError('min')) {
+    <small class="text-red-500">Cette valeur est trop petite (min : {{ getError('min').min }})</small>
+  }
+  @if(getError('max')) {
+    <small class="text-red-500">Cette valeur est trop petite (min : {{ getError('max').max }})</small>
+  }
+}

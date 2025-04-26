@@ -1,23 +1,22 @@
 @if(dresseur()) {
+  <p-card header="Vos infos">
+    <p>Id: {{dresseur()?.id}}</p>
+    <p>Nom: {{dresseur()?.nom}}</p>
+    <p>Age: {{dresseur()?.age}}</p>
+  </p-card>
+  <hr class="my-3">
+  <p-card header="Vos Pokemons">
+    <p-data-view [value]="dresseur()?.pokemons">
+      <ng-template #list let-pokemons>
+        @for(pokemon of pokemons; track pokemon.raceNom) {
+          <img [src]="'http://localhost:3000/pokemon/image/' + pokemon.raceNumero" [alt]="pokemon.nom" [style]="{'width': '100px'}">
+          <p>Nom: {{pokemon.nom}}</p>
+          <p>Niveau: {{pokemon.niveau}}</p>
+          <p>Race: {{pokemon.raceNom}} ({{pokemon.raceNumero}})</p>
+        }
+      </ng-template>
+    </p-data-view>
 
-<p-card header="Vos infos">
-  <p>Id: {{dresseur()?.id}}</p>
-  <p>Nom: {{dresseur()?.nom}}</p>
-  <p>Age: {{dresseur()?.age}}</p>
-</p-card>
-<hr class="my-3">
-<p-card header="Vos Pokemons">
-  <p-data-view [value]="dresseur()?.pokemons">
-    <ng-template #list let-pokemons>
-      @for(pokemon of pokemons; track pokemon.raceNom) {
-        <img [src]="'http://localhost:3000/pokemon/image/' + pokemon.raceNumero" [alt]="pokemon.nom" [style]="{'width': '100px'}">
-        <p>Nom: {{pokemon.nom}}</p>
-        <p>Niveau: {{pokemon.niveau}}</p>
-        <p>Race: {{pokemon.raceNom}} ({{pokemon.raceNumero}})</p>
-      }
-    </ng-template>
-  </p-data-view>
-
-</p-card>
+  </p-card>
 }
 

@@ -6,11 +6,13 @@
           <input pInputText formControlName="nom" class="w-full">
           <label>Nom du dresseur</label>
         </p-float-label>
+        <app-form-error [control]="form.get('nom')!"></app-form-error>
         <p-float-label variant="on">
           <p-input-number formControlName="age" class="w-full"></p-input-number>
           <label>Age du dresseur</label>
         </p-float-label>
-        <p-button type="submit" label="S'enregister" severity="contrast"></p-button>
+        <app-form-error [control]="form.get('age')!"></app-form-error>
+        <p-button [disabled]="form.invalid" type="submit" label="S'enregister" severity="contrast"></p-button>
       </form>
     </p-card>
   </div>

@@ -3,12 +3,13 @@ import {SessionService} from '../../services/session.service';
 import {DresseurService} from '../../services/dresseur.service';
 import {Router} from '@angular/router';
 import {MessageService} from 'primeng/api';
-import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Button} from 'primeng/button';
 import {Card} from 'primeng/card';
 import {FloatLabel} from 'primeng/floatlabel';
 import {InputText} from 'primeng/inputtext';
 import {InputNumber} from 'primeng/inputnumber';
+import {FormErrorComponent} from '../../components/form-error/form-error.component';
 
 @Component({
   imports: [
@@ -18,7 +19,8 @@ import {InputNumber} from 'primeng/inputnumber';
     InputText,
     ReactiveFormsModule,
     FormsModule,
-    InputNumber
+    InputNumber,
+    FormErrorComponent
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
@@ -31,8 +33,8 @@ export class RegisterComponent {
   private formBuilder = inject(FormBuilder);
 
   form: FormGroup = this.formBuilder.group({
-    nom: [''],
-    age: [''],
+    nom: [null, [Validators.required]],
+    age: [null, [Validators.required]],
   });
 
   register() {
